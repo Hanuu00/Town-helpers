@@ -2,33 +2,59 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>도트 도우미 - EXE 다운로드</title>
+    <title>도트 도우미 - 다운로드</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-slate-50 py-12 px-6">
-    <div class="max-w-2xl mx-auto bg-white p-10 rounded-3xl shadow-xl">
-        <a href="index.html" class="text-orange-500 font-bold mb-8 inline-block">← 홈으로</a>
-        <h1 class="text-4xl font-black mb-10 text-slate-800 text-center tracking-tighter">도트 도우미 <span class="text-orange-500">EXE</span></h1>
+    <div class="max-w-2xl mx-auto bg-white p-10 rounded-3xl shadow-xl border border-slate-100">
+        <a href="index.html" class="text-orange-500 font-bold hover:underline mb-8 inline-block">← 홈으로</a>
+        
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-black mb-4 text-slate-800 tracking-tighter">도트 도우미 통합팩</h1>
+            <p class="text-slate-500">도안 가이드와 EXE 실행 파일이 포함된 패키지입니다.</p>
+        </div>
 
-        <div class="text-center p-10 bg-orange-50 rounded-3xl mb-12 border border-orange-100">
-            <h4 class="font-bold text-orange-900 text-xl mb-4 italic">한 번의 클릭으로 설치 끝!</h4>
-            <a href="DotHelper.exe" download class="bg-orange-500 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-orange-600 transition shadow-xl shadow-orange-100 inline-block">
-                DotHelper.exe 다운로드
+        <div class="bg-orange-50 p-10 rounded-3xl border-2 border-dashed border-orange-200 text-center mb-12">
+            <i class="fa-solid fa-box-archive text-5xl text-orange-500 mb-4"></i>
+            <h3 class="font-black text-xl mb-6 text-orange-900">도트도우미_통합팩.zip</h3>
+            <a href="도트도우미_통합팩.zip" download class="bg-orange-500 text-white px-12 py-4 rounded-2xl font-black text-xl hover:bg-orange-600 transition shadow-lg shadow-orange-200 inline-block">
+                통합팩 다운로드
             </a>
         </div>
 
-        <div class="space-y-6">
-            <h2 class="text-xl font-bold border-b pb-2">기능 요약</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm">
-                    <p class="font-bold mb-1">📌 위치 고정 모드</p>
-                    <p class="text-slate-500 italic text-xs">마우스 클릭을 통과하여 게임 위에 그릴 수 있습니다.</p>
+        <div class="space-y-8">
+            <h2 class="text-xl font-bold border-b pb-2 flex items-center gap-2 text-slate-700">
+                <i class="fa-solid fa-wand-magic-sparkles text-orange-400"></i> 설치 및 실행 방법
+            </h2>
+            
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <div class="bg-orange-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-orange-600 shrink-0">1</div>
+                    <p class="text-slate-600 font-medium">위의 주황색 버튼을 눌러 ZIP 파일을 다운로드합니다.</p>
                 </div>
-                <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm">
-                    <p class="font-bold mb-1">📌 팔레트 강조</p>
-                    <p class="text-slate-500 italic text-xs">내가 선택한 색깔이 어디인지 깜빡이며 알려줍니다.</p>
+                
+                <div class="flex gap-4">
+                    <div class="bg-orange-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-orange-600 shrink-0">2</div>
+                    <p class="text-slate-600 font-medium">마우스 우클릭 후 <b>[여기에 압축 풀기]</b>를 진행해 주세요.</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="bg-orange-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-orange-600 shrink-0">3</div>
+                    <p class="text-slate-600 font-medium">생성된 폴더 안의 <span class="text-orange-600 font-bold underline">DotHelper.exe</span>를 실행하세요!</p>
                 </div>
             </div>
+        </div>
+
+        <div class="mt-12 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+            <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-lightbulb text-yellow-500"></i> 실행 꿀팁
+            </h4>
+            <ul class="text-sm text-slate-500 space-y-2 list-disc ml-5 leading-relaxed">
+                <li>윈도우 보호 창이 뜨면 <b>[추가 정보]</b> 버튼을 누른 후 <b>[실행]</b>을 눌러주세요.</li>
+                <li>프로그램이 실행되면 투명도를 조절하여 게임 화면에 맞추어 보세요.</li>
+                <li>압축을 풀지 않고 ZIP 안에서 실행하면 설정값이 저장되지 않을 수 있습니다.</li>
+            </ul>
         </div>
     </div>
 </body>
