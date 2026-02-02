@@ -10,16 +10,58 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
         body { font-family: 'Noto Sans KR', sans-serif; scroll-behavior: smooth; }
         .gradient-text { background: linear-gradient(to right, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* 팝업 애니메이션 */
+        .animate-pop { animation: shadow-pulse 0.3s ease-out; }
+        @keyframes shadow-pulse {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
     </style>
     <script>
         // 준비중 알림창 함수
         function comingSoon(event) {
-            event.preventDefault(); // 링크 이동을 막음
+            event.preventDefault(); 
             alert("📢 디스코드 서버는 현재 준비 중입니다.\n조금만 기다려 주세요! :)");
+        }
+
+        // 팝업 닫기 함수
+        function closePopup() {
+            const popup = document.getElementById('mainPopup');
+            popup.classList.add('hidden');
         }
     </script>
 </head>
 <body class="bg-slate-50 text-slate-900">
+
+    <div id="mainPopup" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-slate-100 animate-pop">
+            <div class="bg-red-500 p-4 text-white flex justify-between items-center">
+                <h5 class="font-bold flex items-center gap-2 text-sm md:text-base">
+                    <i class="fa-solid fa-triangle-exclamation"></i> 중요 안내 & 버그 소식
+                </h5>
+                <button onclick="closePopup()" class="hover:rotate-90 transition duration-200">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-8 text-center">
+                <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                    <i class="fa-solid fa-bug-slash"></i>
+                </div>
+                <h3 class="text-xl font-black text-slate-800 mb-2">알려진 버그 & 패치 안내</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                    현재 <b>도감 도우미</b> 일부 요리 데이터 저장 오류를 수정했습니다!<br>
+                    기존 파일을 사용 중인 분들은 <span class="text-red-500 font-bold underline">새 버전 통합팩</span>을 다시 받아주세요.
+                </p>
+                
+                <div class="flex gap-3">
+                    <a href="notice.html" class="flex-1 bg-slate-100 text-slate-600 py-3 rounded-xl font-bold hover:bg-slate-200 transition text-sm">자세히 보기</a>
+                    <button onclick="closePopup()" class="flex-1 bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition text-sm">확인했습니다</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <nav class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-100">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -95,7 +137,7 @@
                     <div class="flex items-center gap-2 text-orange-500 font-black mb-4 uppercase tracking-widest text-sm">
                         <i class="fa-solid fa-palette"></i> <span>Tool 02</span>
                     </div>
-                    <h3 class="text-4xl font-black mb-6 leading-tight text-slate-800 text-slate-800">두근두근타운<br>도트 도우미 Pro</h3>
+                    <h3 class="text-4xl font-black mb-6 leading-tight text-slate-800">두근두근타운<br>도트 도우미 Pro</h3>
                     <p class="text-slate-600 mb-10 text-lg leading-relaxed">
                         화면 투명 오버레이 기능으로 어려운 도안도 <br>
                         똑같이 그려낼 수 있게 도와줍니다.
