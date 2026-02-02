@@ -2,53 +2,53 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>도감 도우미 - 상세 설명</title>
+    <title>도감 도우미 - 다운로드</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-gray-50 py-10">
-    <div class="max-w-3xl mx-auto bg-white p-10 rounded-3xl shadow-lg border border-gray-100">
-        <a href="index.html" class="text-green-600 font-bold hover:underline">← 메인으로 돌아가기</a>
+<body class="bg-slate-50 py-12 px-6">
+    <div class="max-w-2xl mx-auto bg-white p-10 rounded-3xl shadow-xl border border-slate-100">
+        <a href="index.html" class="text-green-600 font-bold hover:underline mb-8 inline-block">← 홈으로</a>
         
-        <div class="text-center my-10">
-            <h1 class="text-4xl font-black text-gray-800 mb-4">도감 도우미 설치 가이드</h1>
-            <p class="text-gray-500 italic">"파일 두 개를 모두 받아야 정상적으로 작동합니다!"</p>
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-black mb-4 text-slate-800 tracking-tighter">도감 도우미 통합팩</h1>
+            <p class="text-slate-500">EXE와 데이터 파일이 모두 들어있는 압축 파일입니다.</p>
         </div>
 
-        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 mb-10 rounded-r-xl">
-            <h3 class="font-bold text-yellow-800 mb-2"><i class="fa-solid fa-circle-exclamation mr-2"></i>꼭 읽어주세요!</h3>
-            <p class="text-yellow-700 text-sm leading-relaxed">
-                도감 도우미를 실행하려면 <b>프로그램 파일(.py)</b>과 <b>데이터 파일(.json)</b>이 필요합니다.<br>
-                다운로드 받은 후, 두 파일을 <b>하나의 폴더</b>안에 같이 넣어주세요.
-            </p>
+        <div class="bg-green-50 p-10 rounded-3xl border-2 border-dashed border-green-200 text-center mb-12">
+            <i class="fa-solid fa-file-zipper text-5xl text-green-600 mb-4"></i>
+            <h3 class="font-black text-xl mb-6 text-green-900">도감도우미_설치팩.zip</h3>
+            <a href="도감도우미_설치팩.zip" download class="bg-green-600 text-white px-12 py-4 rounded-2xl font-black text-xl hover:bg-green-700 transition shadow-lg shadow-green-200 inline-block">
+                통합팩 다운로드
+            </a>
         </div>
 
-        <h2 class="text-2xl font-bold mb-6 text-gray-700">Step 1. 필수 파일 다운로드</h2>
-        <div class="grid md:grid-cols-2 gap-6 mb-12">
-            <div class="border-2 border-green-100 rounded-2xl p-6 text-center hover:border-green-500 transition">
-                <i class="fa-brands fa-python text-4xl text-green-600 mb-4"></i>
-                <h4 class="font-bold mb-2">실행 프로그램</h4>
-                <p class="text-xs text-gray-400 mb-4">HeartbeatTownApp.py</p>
-                <a href="HeartbeatTownApp.py" download class="bg-green-600 text-white px-6 py-2 rounded-lg font-bold block hover:bg-green-700">다운로드</a>
+        <div class="space-y-8">
+            <h2 class="text-xl font-bold border-b pb-2 flex items-center gap-2">
+                <i class="fa-solid fa-circle-info text-blue-500"></i> 사용 순서
+            </h2>
+            
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <div class="bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-slate-500 shrink-0">1</div>
+                    <p class="text-slate-600">위의 <b>통합팩 다운로드</b> 버튼을 눌러 파일을 받습니다.</p>
+                </div>
+                
+                <div class="flex gap-4">
+                    <div class="bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-slate-500 shrink-0">2</div>
+                    <p class="text-slate-600">받은 파일의 마우스 오른쪽 버튼을 눌러 <b>[알아서 풀기]</b> 또는 <b>[여기에 압축 풀기]</b>를 선택합니다.</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-slate-500 shrink-0">3</div>
+                    <p class="text-slate-600">폴더 안에 있는 <span class="text-green-600 font-bold underline">도감도우미.exe</span> 파일을 더블 클릭하여 실행하세요!</p>
+                </div>
             </div>
-
-            <div class="border-2 border-blue-100 rounded-2xl p-6 text-center hover:border-blue-500 transition">
-                <i class="fa-solid fa-file-code text-4xl text-blue-600 mb-4"></i>
-                <h4 class="font-bold mb-2">데이터 파일</h4>
-                <p class="text-xs text-gray-400 mb-4">도감데이터.json</p>
-                <a href="도감데이터.json" download class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold block hover:bg-blue-700">다운로드</a>
-            </div>
         </div>
 
-        <h2 class="text-2xl font-bold mb-4 text-gray-700">Step 2. 파일 정리하기</h2>
-        <div class="bg-gray-100 p-6 rounded-2xl mb-10 font-mono text-sm text-gray-600">
-            📂 내 컴퓨터 폴더<br>
-            ┣ 📄 HeartbeatTownApp.py (실행 파일)<br>
-            ┗ 📄 도감데이터.json (데이터 파일) <span class="text-red-500 font-bold">← 같이 있어야 해요!</span>
-        </div>
-
-        <div class="text-center pt-6 border-t">
-            <p class="text-gray-400 text-sm">문의사항: 히포 디스코드 채널</p>
+        <div class="mt-12 bg-red-50 p-5 rounded-2xl border border-red-100 text-sm">
+            <p class="text-red-700 font-bold mb-1 underline">⚠️ 주의</p>
+            <p class="text-red-600 leading-relaxed">압축을 풀지 않고 ZIP 파일 안에서 바로 실행하면 데이터 저장이 되지 않을 수 있습니다. 꼭 <b>압축을 푼 뒤에</b> 사용해 주세요!</p>
         </div>
     </div>
 </body>
