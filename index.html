@@ -9,60 +9,125 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
         body { font-family: 'Noto Sans KR', sans-serif; scroll-behavior: smooth; }
+        .gradient-text { background: linear-gradient(to right, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
+    <script>
+        // 준비중 알림창 함수
+        function comingSoon(event) {
+            event.preventDefault(); // 링크 이동을 막음
+            alert("📢 디스코드 서버는 현재 준비 중입니다.\n조금만 기다려 주세요! :)");
+        }
+    </script>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
     <nav class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-100">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-black tracking-tighter text-slate-800"><a href="index.html">HIPPO <span class="text-green-600">TOOLS</span></a></h1>
+            <h1 class="text-2xl font-black tracking-tighter text-slate-800">
+                <a href="index.html">HIPPOO <span class="text-green-600">TOOLS</span></a>
+            </h1>
+            
             <div class="hidden md:flex items-center space-x-8 text-sm font-bold">
-                <a href="index.html" class="text-green-600">홈</a>
+                <a href="index.html" class="text-green-600 font-black underline decoration-2 underline-offset-8">홈</a>
                 <a href="notice.html" class="text-slate-600 hover:text-green-600 transition">공지사항</a>
                 <a href="#encyclopedia" class="text-slate-600 hover:text-green-600 transition">도감 도우미</a>
                 <a href="#dot" class="text-slate-600 hover:text-orange-500 transition">도트 도우미</a>
-                <a href="디스코드_링크" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition shadow-md">디스코드</a>
+                <a href="#" onclick="comingSoon(event)" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition shadow-md">디스코드</a>
             </div>
         </div>
     </nav>
 
-    <header class="py-24 px-4 text-center bg-white border-b border-slate-100">
+    <header class="py-24 px-4 text-center bg-white">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-5xl md:text-6xl font-black mb-8 leading-tight">클릭 한 번으로 끝내는<br><span class="text-green-600">두근두근타운</span> 도우미</h2>
-            <p class="text-lg text-slate-500 mb-12 max-w-2xl mx-auto">설치가 필요 없는 EXE 파일로 배포됩니다. 다운로드 후 바로 실행하세요!</p>
+            <div class="inline-block bg-green-100 text-green-700 px-4 py-1 rounded-full text-xs font-bold mb-6 italic shadow-sm">
+                Official Website
+            </div>
+            <h2 class="text-5xl md:text-6xl font-black mb-8 leading-tight text-slate-900 tracking-tight">
+                두근두근타운 모험을 <br><span class="gradient-text">완벽하게 보조합니다</span>
+            </h2>
+            <p class="text-lg text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed">
+                복잡한 수집 관리부터 섬세한 도트 작업까지 <br>
+                히포가 직접 만든 EXE 통합 패키지로 시작하세요.
+            </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#encyclopedia" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-800 transition shadow-lg text-center">프로그램 다운로드</a>
-                <a href="notice.html" class="bg-white border border-slate-200 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-50 transition text-center">최신 업데이트 소식</a>
+                <a href="#encyclopedia" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-800 transition shadow-lg text-center">무료 다운로드</a>
+                <a href="notice.html" class="bg-white border border-slate-200 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-50 transition text-center">최신 소식</a>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 py-20 space-y-32">
+    <section class="max-w-4xl mx-auto px-6 -mt-10 mb-20 relative z-10">
+        <a href="notice.html" class="block bg-white rounded-2xl shadow-xl shadow-slate-200/50 p-5 border border-slate-100 flex items-center gap-4 hover:border-green-300 transition">
+            <span class="bg-red-500 text-white px-2 py-0.5 rounded text-[10px] font-black uppercase shrink-0">NOTICE</span>
+            <p class="text-sm text-slate-600 truncate flex-1 font-medium italic">
+                도감/도트 도우미 EXE 통합팩(ZIP) 배포 안내!
+            </p>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-300"></i>
+        </a>
+    </section>
+
+    <main class="max-w-6xl mx-auto px-6 pb-32 space-y-32">
+
         <section id="encyclopedia" class="scroll-mt-24">
             <div class="flex flex-col md:flex-row items-center gap-12">
                 <div class="flex-1">
-                    <h3 class="text-4xl font-black mb-6 italic text-green-600">01. 도감 도우미</h3>
-                    <p class="text-slate-600 mb-8 text-lg leading-relaxed">복잡한 도감 관리를 EXE 하나로 끝내세요.<br>자동 저장 기능과 검색 기능을 지원합니다.</p>
-                    <a href="docam.html" class="inline-block bg-green-600 text-white px-10 py-4 rounded-2xl font-black text-lg hover:bg-green-700 transition shadow-xl shadow-green-100">상세 설명 & EXE 다운로드</a>
+                    <div class="flex items-center gap-2 text-green-600 font-black mb-4 uppercase tracking-widest text-sm">
+                        <i class="fa-solid fa-book"></i> <span>Tool 01</span>
+                    </div>
+                    <h3 class="text-4xl font-black mb-6 leading-tight text-slate-800">두근두근타운<br>도감 도우미 Pro</h3>
+                    <p class="text-slate-600 mb-10 text-lg leading-relaxed">
+                        내가 잡은 모든 수집품을 체크하고 영구 보관하세요. <br>
+                        EXE와 JSON이 포함된 통합 패키지로 제공됩니다.
+                    </p>
+                    <a href="docam.html" class="bg-green-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-green-700 transition shadow-xl shadow-green-100 inline-block">
+                        사용법 & 통합팩 받기 <i class="fa-solid fa-download ml-2"></i>
+                    </a>
                 </div>
-                <div class="flex-1 w-full bg-slate-200 rounded-3xl aspect-video flex items-center justify-center text-slate-400">이미지 준비 중</div>
+                <div class="flex-1 w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video bg-slate-200">
+                    <img src="docam_screen.png" alt="도감 도우미 화면" class="w-full h-full object-cover hover:scale-105 transition duration-500 shadow-inner" onerror="this.src='https://via.placeholder.com/800x450/e2e8f0/94a3b8?text=Docam+Screen+Image+Missing'">
+                </div>
             </div>
         </section>
 
         <section id="dot" class="scroll-mt-24">
             <div class="flex flex-col md:flex-row-reverse items-center gap-12">
                 <div class="flex-1">
-                    <h3 class="text-4xl font-black mb-6 italic text-orange-500">02. 도트 도우미</h3>
-                    <p class="text-slate-600 mb-8 text-lg leading-relaxed">게임 화면 위에 띄워놓고 그대로 그리세요.<br>가이드 격자와 투명도 조절을 지원합니다.</p>
-                    <a href="dot.html" class="inline-block bg-orange-500 text-white px-10 py-4 rounded-2xl font-black text-lg hover:bg-orange-600 transition shadow-xl shadow-orange-100">상세 설명 & EXE 다운로드</a>
+                    <div class="flex items-center gap-2 text-orange-500 font-black mb-4 uppercase tracking-widest text-sm">
+                        <i class="fa-solid fa-palette"></i> <span>Tool 02</span>
+                    </div>
+                    <h3 class="text-4xl font-black mb-6 leading-tight text-slate-800 text-slate-800">두근두근타운<br>도트 도우미 Pro</h3>
+                    <p class="text-slate-600 mb-10 text-lg leading-relaxed">
+                        화면 투명 오버레이 기능으로 어려운 도안도 <br>
+                        똑같이 그려낼 수 있게 도와줍니다.
+                    </p>
+                    <a href="dot.html" class="bg-orange-500 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-orange-600 transition shadow-xl shadow-orange-100 inline-block">
+                        사용법 & 통합팩 받기 <i class="fa-solid fa-download ml-2"></i>
+                    </a>
                 </div>
-                <div class="flex-1 w-full bg-slate-200 rounded-3xl aspect-video flex items-center justify-center text-slate-400">이미지 준비 중</div>
+                <div class="flex-1 w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video bg-slate-200">
+                    <img src="dot_screen.png" alt="도트 도우미 화면" class="w-full h-full object-cover hover:scale-105 transition duration-500 shadow-inner" onerror="this.src='https://via.placeholder.com/800x450/e2e8f0/94a3b8?text=Dot+Screen+Image+Missing'">
+                </div>
             </div>
         </section>
+
     </main>
 
-    <footer class="bg-slate-900 text-white py-12 px-6 text-center text-sm">
-        <p class="text-slate-500 italic">© 2024 Hippo Tools. 모든 프로그램은 개인용 무료 소프트웨어입니다.</p>
+    <footer class="bg-slate-900 text-white py-16 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <h4 class="text-2xl font-black mb-2 tracking-tighter text-white">HIPPOO TOOLS</h4>
+                <p class="text-slate-400 text-sm">두근두근타운 모험가들을 위한 무료 프로그램</p>
+            </div>
+            <div class="flex gap-6 font-bold text-sm">
+                <a href="notice.html" class="hover:text-green-500 transition">공지사항</a>
+                <a href="#" onclick="comingSoon(event)" class="hover:text-indigo-400 transition">디스코드</a>
+                <a href="https://github.com" class="hover:text-slate-300 transition">GitHub</a>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-xs tracking-widest uppercase">
+            © 2026 Hippoo Developer. All rights reserved.
+        </div>
     </footer>
+
 </body>
 </html>
