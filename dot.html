@@ -2,28 +2,33 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>도트 도우미 - 상세 설명</title>
+    <title>도트 도우미 - EXE 다운로드</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 py-20">
-    <div class="max-w-3xl mx-auto bg-white p-10 rounded-3xl shadow-lg">
-        <a href="index.html" class="text-orange-500 font-bold">← 돌아가기</a>
-        <h1 class="text-4xl font-bold mt-6 mb-4">도트 도우미 Pro 사용법</h1>
-        <p class="text-gray-600 mb-8">도안을 화면에 띄워두고 똑같이 그릴 수 있게 도와줍니다.</p>
-        
-        <h2 class="text-2xl font-bold mb-3">1. 설치 방법</h2>
-        <p class="mb-6">이 프로그램은 PyQt5와 Numpy가 필요합니다.<br>
-        <code class="bg-gray-100 p-2 rounded block mt-2 font-mono text-sm">pip install PyQt5 numpy pillow</code></p>
+<body class="bg-slate-50 py-12 px-6">
+    <div class="max-w-2xl mx-auto bg-white p-10 rounded-3xl shadow-xl">
+        <a href="index.html" class="text-orange-500 font-bold mb-8 inline-block">← 홈으로</a>
+        <h1 class="text-4xl font-black mb-10 text-slate-800 text-center tracking-tighter">도트 도우미 <span class="text-orange-500">EXE</span></h1>
 
-        <h2 class="text-2xl font-bold mb-3">2. 꿀팁</h2>
-        <ul class="list-disc ml-5 space-y-2 mb-10">
-            <li><b>투명도 조절:</b> 슬라이더를 움직여 뒤에 있는 게임 화면이 보이게 하세요.</li>
-            <li><b>깜빡임 기능:</b> 내가 칠해야 할 색깔이 어디인지 깜빡이며 알려줍니다.</li>
-        </ul>
+        <div class="text-center p-10 bg-orange-50 rounded-3xl mb-12 border border-orange-100">
+            <h4 class="font-bold text-orange-900 text-xl mb-4 italic">한 번의 클릭으로 설치 끝!</h4>
+            <a href="DotHelper.exe" download class="bg-orange-500 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-orange-600 transition shadow-xl shadow-orange-100 inline-block">
+                DotHelper.exe 다운로드
+            </a>
+        </div>
 
-        <div class="bg-orange-50 p-8 rounded-2xl text-center">
-            <h3 class="text-xl font-bold mb-4">프로그램 다운로드</h3>
-            <a href="DotHelper.py" download class="bg-orange-500 text-white px-8 py-3 rounded-lg font-bold">도트도우미.py 받기</a>
+        <div class="space-y-6">
+            <h2 class="text-xl font-bold border-b pb-2">기능 요약</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm">
+                    <p class="font-bold mb-1">📌 위치 고정 모드</p>
+                    <p class="text-slate-500 italic text-xs">마우스 클릭을 통과하여 게임 위에 그릴 수 있습니다.</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm">
+                    <p class="font-bold mb-1">📌 팔레트 강조</p>
+                    <p class="text-slate-500 italic text-xs">내가 선택한 색깔이 어디인지 깜빡이며 알려줍니다.</p>
+                </div>
+            </div>
         </div>
     </div>
 </body>
