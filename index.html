@@ -19,13 +19,11 @@
         }
     </style>
     <script>
-        // 준비중 알림창 함수
         function comingSoon(event) {
             event.preventDefault(); 
             alert("📢 디스코드 서버는 현재 준비 중입니다.\n조금만 기다려 주세요! :)");
         }
 
-        // 팝업 닫기 함수
         function closePopup() {
             const popup = document.getElementById('mainPopup');
             popup.classList.add('hidden');
@@ -44,19 +42,17 @@
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
-            
             <div class="p-8 text-center">
                 <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
                     <i class="fa-solid fa-bug-slash"></i>
                 </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">업데이트 안내</h3>
+                <h3 class="text-xl font-black text-slate-800 mb-2">알려진 버그 & 패치 안내</h3>
                 <p class="text-slate-500 text-sm leading-relaxed mb-6">
-                     <b>도감 도우미</b> 2월3일자 1.2.2 베타 버전 업데이트 완료!<br>
-                    업데이트 내용이 궁금하시면 <span class="text-red-500 font-bold underline">새 버전 통합팩</span>을 받으신후 공지사항 참고.
+                    현재 <b>도감 도우미</b> 일부 요리 데이터 저장 오류를 수정했습니다!<br>
+                    기존 파일을 사용 중인 분들은 <span class="text-red-500 font-bold underline">새 버전 통합팩</span>을 다시 받아주세요.
                 </p>
-                
                 <div class="flex gap-3">
-                    <a href="notice.html" class="flex-1 bg-slate-100 text-slate-600 py-3 rounded-xl font-bold hover:bg-slate-200 transition text-sm">자세히 보기</a>
+                    <a href="notice.html" class="flex-1 bg-slate-100 text-slate-600 py-3 rounded-xl font-bold hover:bg-slate-200 transition text-sm text-center">자세히 보기</a>
                     <button onclick="closePopup()" class="flex-1 bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition text-sm">확인했습니다</button>
                 </div>
             </div>
@@ -68,12 +64,12 @@
             <h1 class="text-2xl font-black tracking-tighter text-slate-800">
                 <a href="index.html">HIPPOO <span class="text-green-600">TOOLS</span></a>
             </h1>
-            
             <div class="hidden md:flex items-center space-x-8 text-sm font-bold">
                 <a href="index.html" class="text-green-600 font-black underline decoration-2 underline-offset-8">홈</a>
                 <a href="notice.html" class="text-slate-600 hover:text-green-600 transition">공지사항</a>
                 <a href="#encyclopedia" class="text-slate-600 hover:text-green-600 transition">도감 도우미</a>
                 <a href="#dot" class="text-slate-600 hover:text-orange-500 transition">도트 도우미</a>
+                <a href="#converter" class="text-slate-600 hover:text-blue-500 transition">데이터 변환기</a>
                 <a href="#" onclick="comingSoon(event)" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition shadow-md">디스코드</a>
             </div>
         </div>
@@ -88,25 +84,15 @@
                 두근두근타운 모험을 <br><span class="gradient-text">완벽하게 보조합니다</span>
             </h2>
             <p class="text-lg text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed">
-                복잡한 수집 관리부터 섬세한 도트 작업까지 <br>
-                히포가 직접 만든 EXE 통합 패키지로 시작하세요.
+                복잡한 수집 관리부터 섬세한 도트 작업, 그리고 데이터 변환까지 <br>
+                히포의 전용 도구들로 더 쉽고 빠르게 즐기세요.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a href="#encyclopedia" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-800 transition shadow-lg text-center">무료 다운로드</a>
-                <a href="notice.html" class="bg-white border border-slate-200 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-50 transition text-center">최신 소식</a>
+                <a href="converter.html" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-lg text-center">데이터 변환기 실행</a>
             </div>
         </div>
     </header>
-
-    <section class="max-w-4xl mx-auto px-6 -mt-10 mb-20 relative z-10">
-        <a href="notice.html" class="block bg-white rounded-2xl shadow-xl shadow-slate-200/50 p-5 border border-slate-100 flex items-center gap-4 hover:border-green-300 transition">
-            <span class="bg-red-500 text-white px-2 py-0.5 rounded text-[10px] font-black uppercase shrink-0">NOTICE</span>
-            <p class="text-sm text-slate-600 truncate flex-1 font-medium italic">
-                도감/도트 도우미 EXE 통합팩(ZIP) 배포 안내!
-            </p>
-            <i class="fa-solid fa-chevron-right text-xs text-slate-300"></i>
-        </a>
-    </section>
 
     <main class="max-w-6xl mx-auto px-6 pb-32 space-y-32">
 
@@ -116,17 +102,17 @@
                     <div class="flex items-center gap-2 text-green-600 font-black mb-4 uppercase tracking-widest text-sm">
                         <i class="fa-solid fa-book"></i> <span>Tool 01</span>
                     </div>
-                    <h3 class="text-4xl font-black mb-6 leading-tight text-slate-800">두근두근타운<br>도감 도우미 Pro</h3>
+                    <h3 class="text-4xl font-black mb-6 leading-tight text-slate-800">도감 도우미 Pro</h3>
                     <p class="text-slate-600 mb-10 text-lg leading-relaxed">
-                        내가 잡은 모든 수집품을 체크하고 영구 보관하세요. <br>
-                        EXE와 JSON이 포함된 통합 패키지로 제공됩니다.
+                        모든 수집품을 체크하고 영구 보관하세요. <br>
+                        EXE와 JSON이 포함된 통합 패키지를 제공합니다.
                     </p>
                     <a href="docam.html" class="bg-green-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-green-700 transition shadow-xl shadow-green-100 inline-block">
                         사용법 & 통합팩 받기 <i class="fa-solid fa-download ml-2"></i>
                     </a>
                 </div>
                 <div class="flex-1 w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video bg-slate-200">
-                    <img src="docam_screen.png" alt="도감 도우미 화면" class="w-full h-full object-cover hover:scale-105 transition duration-500 shadow-inner" onerror="this.src='https://via.placeholder.com/800x450/e2e8f0/94a3b8?text=Docam+Screen+Image+Missing'">
+                    <img src="docam_screen.png" alt="도감 도우미 화면" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/800x450/e2e8f0/94a3b8?text=Docam+Screen'">
                 </div>
             </div>
         </section>
@@ -137,7 +123,7 @@
                     <div class="flex items-center gap-2 text-orange-500 font-black mb-4 uppercase tracking-widest text-sm">
                         <i class="fa-solid fa-palette"></i> <span>Tool 02</span>
                     </div>
-                    <h3 class="text-4xl font-black mb-6 leading-tight text-slate-800">두근두근타운<br>도트 도우미 Pro</h3>
+                    <h3 class="text-4xl font-black mb-6 leading-tight text-slate-800">도트 도우미 Pro</h3>
                     <p class="text-slate-600 mb-10 text-lg leading-relaxed">
                         화면 투명 오버레이 기능으로 어려운 도안도 <br>
                         똑같이 그려낼 수 있게 도와줍니다.
@@ -147,7 +133,45 @@
                     </a>
                 </div>
                 <div class="flex-1 w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video bg-slate-200">
-                    <img src="dot_screen.png" alt="도트 도우미 화면" class="w-full h-full object-cover hover:scale-105 transition duration-500 shadow-inner" onerror="this.src='https://via.placeholder.com/800x450/e2e8f0/94a3b8?text=Dot+Screen+Image+Missing'">
+                    <img src="dot_screen.png" alt="도트 도우미 화면" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/800x450/e2e8f0/94a3b8?text=Dot+Screen'">
+                </div>
+            </div>
+        </section>
+
+        <section id="converter" class="scroll-mt-24">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 text-blue-600 font-black mb-4 uppercase tracking-widest text-sm">
+                        <i class="fa-solid fa-file-export"></i> <span>Tool 03</span>
+                    </div>
+                    <h3 class="text-4xl font-black mb-6 leading-tight text-slate-800">도감 데이터 변환기</h3>
+                    <p class="text-slate-600 mb-10 text-lg leading-relaxed">
+                        엑셀로 정리된 데이터를 도우미 전용 JSON으로 <br>
+                        클릭 한 번에 정밀 변환해 드립니다.
+                    </p>
+                    <a href="converter.html" class="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-blue-700 transition shadow-xl shadow-blue-100 inline-block">
+                        변환기 바로가기 <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="flex-1 w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video bg-blue-50 flex items-center justify-center p-8">
+                    <div class="grid grid-cols-2 gap-4 w-full">
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-blue-100 text-center">
+                            <i class="fa-solid fa-file-excel text-green-500 text-2xl mb-2"></i>
+                            <p class="text-xs font-bold text-slate-600">Excel 지원</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-blue-100 text-center">
+                            <i class="fa-solid fa-bolt text-yellow-500 text-2xl mb-2"></i>
+                            <p class="text-xs font-bold text-slate-600">빠른 변환</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-blue-100 text-center">
+                            <i class="fa-solid fa-code text-blue-500 text-2xl mb-2"></i>
+                            <p class="text-xs font-bold text-slate-600">JSON 추출</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-blue-100 text-center">
+                            <i class="fa-solid fa-check-double text-indigo-500 text-2xl mb-2"></i>
+                            <p class="text-xs font-bold text-slate-600">정밀 맵핑</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -158,12 +182,12 @@
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="text-center md:text-left">
                 <h4 class="text-2xl font-black mb-2 tracking-tighter text-white">HIPPOO TOOLS</h4>
-                <p class="text-slate-400 text-sm">두근두근타운 모험가들을 위한 무료 프로그램</p>
+                <p class="text-slate-400 text-sm">모험가들을 위한 무료 프로그램 & 데이터 도구</p>
             </div>
             <div class="flex gap-6 font-bold text-sm">
                 <a href="notice.html" class="hover:text-green-500 transition">공지사항</a>
+                <a href="converter.html" class="hover:text-blue-400 transition">데이터 변환기</a>
                 <a href="#" onclick="comingSoon(event)" class="hover:text-indigo-400 transition">디스코드</a>
-                <a href="https://github.com" class="hover:text-slate-300 transition">GitHub</a>
             </div>
         </div>
         <div class="max-w-6xl mx-auto mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-xs tracking-widest uppercase">
