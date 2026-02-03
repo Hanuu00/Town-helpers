@@ -2,49 +2,70 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>도감 데이터 정밀 변환기</title>
+    <title>히포 도감 변환기 (초정밀 모드)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
-        :root { --primary: #4CAF50; --bg: #f4f7f6; }
-        body { font-family: 'Malgun Gothic', sans-serif; background: var(--bg); padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 15px; shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        h1 { color: var(--primary); text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 15px; }
-        .upload-zone { border: 3px dashed var(--primary); padding: 40px; text-align: center; cursor: pointer; margin-bottom: 20px; border-radius: 10px; }
-        .sheet-card { background: #f9f9f9; border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; border-radius: 10px; }
-        .mapping-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 15px; }
-        select { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
-        .btn-save { width: 100%; padding: 20px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .status { text-align: center; margin-top: 10px; font-weight: bold; }
+        :root { --primary: #10b981; --bg: #f8fafc; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); padding: 20px; color: #1e293b; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        h1 { color: var(--primary); text-align: center; font-weight: 900; font-size: 1.8rem; margin-bottom: 20px; }
+        .upload-zone { border: 3px dashed #e2e8f0; padding: 40px; text-align: center; cursor: pointer; border-radius: 15px; transition: 0.2s; background: #fff; }
+        .upload-zone:hover { border-color: var(--primary); background: #f0fdf4; }
+        .sheet-card { background: #f1f5f9; border-radius: 12px; padding: 20px; margin-top: 20px; }
+        .mapping-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+        .field-item { display: flex; flex-direction: column; gap: 5px; }
+        .field-label { font-size: 0.8rem; font-weight: bold; color: #64748b; }
+        select { padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; background: white; font-size: 0.9rem; }
+        .btn-save { width: 100%; padding: 18px; background: #1e293b; color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.2s; }
+        .btn-save:hover { background: #0f172a; }
+        .info-box { background: #eff6ff; color: #1e40af; padding: 15px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.5; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>도감 데이터 변환기</h1>
+    <h1><i class="fa-solid fa-file-excel"></i> 데이터 변환기 (Column 모드)</h1>
+    
+    <div class="info-box">
+        💡 <b>사용 방법:</b><br>
+        1. 엑셀 파일을 불러옵니다.<br>
+        2. 각 시트가 어떤 <b>카테고리</b>인지 선택하세요.<br>
+        3. <b>이름</b>과 <b>레벨</b>이 들어있는 열(A, B, C...)을 정확히 골라주세요.
+    </div>
+
     <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-        <strong>📁 새로운 엑셀 파일을 클릭하여 업로드</strong>
+        <p class="font-bold text-slate-500">클릭하여 엑셀 파일 업로드</p>
         <input type="file" id="fileInput" accept=".xlsx, .xls" style="display:none">
     </div>
 
     <div id="setupArea" style="display:none;">
         <div id="sheetsContainer"></div>
-        <button class="btn-save" id="downloadBtn">JSON 파일로 변환 및 저장</button>
-        <div id="status" class="status"></div>
+        <button class="btn-save" id="downloadBtn">JSON 파일로 저장하기</button>
     </div>
 </div>
 
 <script>
-    let workbook = null;
+    let wb = null;
+    // 엑셀 열 인덱스를 A, B, C... 문자로 변환하는 함수
+    function getColLetter(n) {
+        let s = "";
+        while(n >= 0) {
+            s = String.fromCharCode(n % 26 + 65) + s;
+            n = Math.floor(n / 26) - 1;
+        }
+        return s;
+    }
+
     const fields = [
-        { key: 'name', label: '이름*', hints: ['이름', '명칭', '물고기', '작물', '품명'] },
-        { key: 'level', label: '레벨*', hints: ['레벨', '난이도', 'Lv'] },
-        { key: 'location', label: '장소', hints: ['장소', '획득', '위치'] },
-        { key: 'weather', label: '날씨', hints: ['날씨', '기상'] },
-        { key: 'time', label: '시간', hints: ['시간', '소요'] },
-        { key: 'price', label: '가격', hints: ['가격', '금액', '판매'] },
-        { key: 'size', label: '크기', hints: ['크기', '사이즈'] },
-        { key: 'sub_type', label: '구분', hints: ['구분', '종류', '타입'] },
-        { key: 'memo', label: '메모', hints: ['메모', '비고'] }
+        { key: 'name', label: '이름(필수)*' },
+        { key: 'level', label: '레벨(필수)*' },
+        { key: 'location', label: '장소/위치' },
+        { key: 'weather', label: '날씨' },
+        { key: 'time', label: '시간' },
+        { key: 'price', label: '가격' },
+        { key: 'size', label: '크기/그림자' },
+        { key: 'sub_type', label: '종류/구분' },
+        { key: 'memo', label: '메모' }
     ];
 
     document.getElementById('fileInput').addEventListener('change', function(e) {
@@ -52,7 +73,7 @@
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function(evt) {
-            workbook = XLSX.read(evt.target.result, { type: 'binary' });
+            wb = XLSX.read(evt.target.result, { type: 'binary' });
             renderSheets();
         };
         reader.readAsBinaryString(file);
@@ -61,22 +82,24 @@
     function renderSheets() {
         const container = document.getElementById('sheetsContainer');
         container.innerHTML = "";
-        workbook.SheetNames.forEach((sheetName, idx) => {
-            const sheet = workbook.Sheets[sheetName];
-            const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-            if (rawData.length === 0) return;
-            
-            // 첫 번째 유효한 행(데이터가 있는 행)을 헤더로 찾기
-            const headers = rawData.find(row => row.length > 0) || [];
+        
+        wb.SheetNames.forEach((sheetName, idx) => {
+            const sheet = wb.Sheets[sheetName];
+            // 열의 개수를 파악하기 위해 범위 확인
+            const range = XLSX.utils.decode_range(sheet['!ref'] || "A1:Z1");
+            const colCount = range.e.c + 1;
+            const colOptions = [];
+            for(let i=0; i<colCount; i++) {
+                colOptions.push(getColLetter(i));
+            }
 
             const card = document.createElement('div');
             card.className = 'sheet-card';
-            card.dataset.sheetName = sheetName;
             card.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <strong>시트: ${sheetName}</strong>
-                    <select class="cat-select" style="width:150px;">
-                        <option value="미사용">미사용</option>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <strong style="font-size:1.1rem;">시트: ${sheetName}</strong>
+                    <select class="cat-select" style="width:140px; border-color:var(--primary); font-weight:bold;">
+                        <option value="미사용">-- 미사용 --</option>
                         <option value="낚시" ${sheetName.includes('낚시')?'selected':''}>낚시</option>
                         <option value="요리" ${sheetName.includes('요리')?'selected':''}>요리</option>
                         <option value="원예" ${sheetName.includes('원예')?'selected':''}>원예</option>
@@ -84,13 +107,13 @@
                         <option value="곤충 채집" ${sheetName.includes('곤충')?'selected':''}>곤충 채집</option>
                     </select>
                 </div>
-                <div class="mapping-grid">
-                    ${fields.map(f => `
-                        <div>
-                            <span style="font-size:11px; color:#666;">${f.label}</span>
-                            <select class="header-match" data-field="${f.key}">
-                                <option value="">-- 제외 --</option>
-                                ${headers.map(h => `<option value="${h}" ${f.hints.some(hint => String(h).includes(hint)) ? 'selected' : ''}>${h}</option>`).join('')}
+                <div class="mapping-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    ${fields.map((f, fIdx) => `
+                        <div class="field-item">
+                            <span class="field-label">${f.label}</span>
+                            <select class="col-match" data-field="${f.key}" data-sheet="${sheetName}">
+                                <option value="">-- 선택 안함 --</option>
+                                ${colOptions.map((letter, lIdx) => `<option value="${lIdx}" ${fIdx === lIdx ? 'selected' : ''}>${letter}열</option>`).join('')}
                             </select>
                         </div>
                     `).join('')}
@@ -102,58 +125,55 @@
     }
 
     document.getElementById('downloadBtn').addEventListener('click', function() {
-        const result = { "낚시":[], "요리":[], "원예":[], "새 관찰":[], "곤충 채집":[], "my_levels": {"낚시":1,"요리":1,"원예":1,"새 관찰":1,"곤충 채집":1} };
-        let count = 0;
+        const finalJson = { "낚시":[], "요리":[], "원예":[], "새 관찰":[], "곤충 채집":[], "my_levels": {"낚시":1,"요리":1,"원예":1,"새 관찰":1,"곤충 채집":1} };
+        let hasData = false;
 
         document.querySelectorAll('.sheet-card').forEach(card => {
             const cat = card.querySelector('.cat-select').value;
             if (cat === "미사용") return;
 
-            const sheetName = card.dataset.sheetName;
-            // 💡 중요: 엑셀의 빈 줄을 무시하고 데이터를 가져옵니다.
-            const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { defval: "" });
-            
+            const sheetName = card.querySelector('.col-match').dataset.sheet;
+            const sheet = wb.Sheets[sheetName];
+            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 }); // 배열 형태로 가져옴
+
             const mapping = {};
-            card.querySelectorAll('.header-match').forEach(sel => {
-                if (sel.value) mapping[sel.dataset.field] = sel.value;
+            card.querySelectorAll('.col-match').forEach(sel => {
+                if(sel.value !== "") mapping[sel.dataset.field] = parseInt(sel.value);
             });
 
-            rows.forEach(row => {
-                const getV = (k) => row[mapping[k]] ? String(row[mapping[k]]) : "";
-                if (!getV('name')) return; // 이름이 없으면 저장 안 함
+            // 데이터 추출 (첫 줄은 제목일 확률이 높으므로 1번 인덱스부터 시작하거나 체크)
+            rows.forEach((row, rIdx) => {
+                const getVal = (f) => (mapping[f] !== undefined && row[mapping[f]]) ? String(row[mapping[f]]) : "";
+                
+                if (!getVal('name') || getVal('name') === "이름") return; // 이름이 없거나 제목행인 경우 패스
 
-                result[cat].push({
-                    "name": getV('name'),
-                    "level": getV('level').replace(/[^0-9]/g, '') || "1",
-                    "location": getV('location'),
-                    "weather": getV('weather') || "무관",
-                    "time": getV('time') || "종일",
-                    "price": getV('price').replace(/[^0-9]/g, ''),
-                    "size": getV('size'),
+                finalJson[cat].push({
+                    "name": getVal('name'),
+                    "level": getVal('level').replace(/[^0-9]/g, '') || "1",
+                    "location": getVal('location'),
+                    "weather": getVal('weather') || "무관",
+                    "time": getVal('time') || "종일",
+                    "price": getVal('price').replace(/[^0-9]/g, ''),
+                    "size": getVal('size'),
                     "stars": [false, false, false, false, false],
                     "img_path": "",
-                    "memo": getV('memo'),
-                    "sub_type": getV('sub_type')
+                    "memo": getVal('memo'),
+                    "sub_type": getVal('sub_type')
                 });
-                count++;
+                hasData = true;
             });
         });
 
-        if (count === 0) {
-            alert("변환할 데이터가 없습니다! 시트별 카테고리와 '이름' 열 매칭을 확인하세요.");
-            return;
-        }
+        if(!hasData) return alert("변환할 데이터가 없습니다.");
 
-        const fileName = prompt("파일 이름을 입력하세요:", "도감데이터.json");
-        if (!fileName) return;
-
-        const blob = new Blob([JSON.stringify(result, null, 4)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
+        let name = prompt("저장할 파일명:", "도감데이터.json");
+        if(!name) return;
+        
+        const blob = new Blob([JSON.stringify(finalJson, null, 4)], {type: "application/json"});
         const a = document.createElement("a");
-        a.href = url;
-        a.download = fileName.endsWith('.json') ? fileName : fileName + ".json";
+        a.href = URL.createObjectURL(blob);
+        a.download = name.endsWith(".json") ? name : name + ".json";
         a.click();
-        document.getElementById('status').innerText = count + "개 데이터 변환 성공!";
     });
 </script>
 </body>
