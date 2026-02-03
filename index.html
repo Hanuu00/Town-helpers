@@ -10,8 +10,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
         body { font-family: 'Noto Sans KR', sans-serif; scroll-behavior: smooth; }
         .gradient-text { background: linear-gradient(to right, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* 팝업 애니메이션 */
         .animate-pop { animation: shadow-pulse 0.3s ease-out; }
         @keyframes shadow-pulse {
             from { transform: scale(0.95); opacity: 0; }
@@ -19,15 +17,11 @@
         }
     </style>
     <script>
-        function comingSoon(event) {
-            event.preventDefault(); 
-            alert("📢 디스코드 서버는 현재 준비 중입니다.\n조금만 기다려 주세요! :)");
-        }
-
         function closePopup() {
             const popup = document.getElementById('mainPopup');
             popup.classList.add('hidden');
         }
+        // 디스코드 관련 알림 함수는 이제 필요 없으므로 제거했습니다.
     </script>
 </head>
 <body class="bg-slate-50 text-slate-900">
@@ -70,7 +64,9 @@
                 <a href="#encyclopedia" class="text-slate-600 hover:text-green-600 transition">도감 도우미</a>
                 <a href="#dot" class="text-slate-600 hover:text-orange-500 transition">도트 도우미</a>
                 <a href="#converter" class="text-slate-600 hover:text-blue-500 transition">데이터 변환기</a>
-                <a href="#" onclick="comingSoon(event)" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition shadow-md">디스코드</a>
+                <a href="https://discord.gg/XHt6QKgtRN" target="_blank" class="bg-[#5865F2] text-white px-5 py-2 rounded-full hover:bg-[#4752C4] transition shadow-md flex items-center gap-2">
+                    <i class="fa-brands fa-discord"></i> 디스코드
+                </a>
             </div>
         </div>
     </nav>
@@ -89,13 +85,14 @@
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a href="#encyclopedia" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-800 transition shadow-lg text-center">무료 다운로드</a>
-                <a href="converter.html" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-lg text-center">데이터 변환기 실행</a>
+                <a href="https://discord.gg/XHt6QKgtRN" target="_blank" class="bg-[#5865F2] text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#4752C4] transition shadow-lg text-center flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-discord"></i> 공식 커뮤니티 입장
+                </a>
             </div>
         </div>
     </header>
 
     <main class="max-w-6xl mx-auto px-6 pb-32 space-y-32">
-
         <section id="encyclopedia" class="scroll-mt-24">
             <div class="flex flex-col md:flex-row items-center gap-12">
                 <div class="flex-1">
@@ -175,7 +172,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <footer class="bg-slate-900 text-white py-16 px-6">
@@ -187,7 +183,9 @@
             <div class="flex gap-6 font-bold text-sm">
                 <a href="notice.html" class="hover:text-green-500 transition">공지사항</a>
                 <a href="converter.html" class="hover:text-blue-400 transition">데이터 변환기</a>
-                <a href="#" onclick="comingSoon(event)" class="hover:text-indigo-400 transition">디스코드</a>
+                <a href="https://discord.gg/XHt6QKgtRN" target="_blank" class="hover:text-[#5865F2] transition flex items-center gap-1">
+                    <i class="fa-brands fa-discord"></i> 디스코드
+                </a>
             </div>
         </div>
         <div class="max-w-6xl mx-auto mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-xs tracking-widest uppercase">
