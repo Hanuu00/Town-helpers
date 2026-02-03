@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>두근두근타운 도감 변환기 마스터</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root { --primary: #4CAF50; --bg: #f4f7f6; --card: #ffffff; }
+        body { font-family: 'Malgun Gothic', sans-serif; background: var(--bg); padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: auto; background: var(--card); padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        h1 { color: var(--primary); text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 15px; }
+        
+        .upload-zone { border: 3px dashed var(--primary); padding: 40px; text-align: center; cursor: pointer; margin: 20px 0; border-radius: 10px; transition: 0.3s; }
+        .upload-zone:hover { background: #e8f5e9; }
+        
+        .sheet-card { background: #f9f9f9; border: 1px solid #ddd; padding: 20px; margin-bottom: 25px; border-radius: 10px; }
+        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
+        .mapping-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .field-box { display: flex; flex-direction: column; }
+        .field-label { font-size: 0.85em; font-weight: bold; color: #555; margin-bottom: 5px; }
+        
+        select { padding: 8px; border-radius: 5px; border: 1px solid #ccc; background: white; }
+        .cat-select { font-weight: bold; border-color: var(--primary); color: var(--primary); }
+
+        .btn-save { width: 100%; padding: 20px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .btn-save:hover { background: #45a049; transform: translateY(-2px); }
+        .btn-save:disabled { background: #ccc; cursor: not-allowed; }
+
+        .status-bar { text-align: center; margin-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>도감 데이터 변환기 Pro</h1>
+    <p style="text-align: center; color: #666;">엑셀 데이터를 프로그램 전용 JSON 파일로 정밀 변환합니다.</p>
+
+    <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+        <strong>📁 엑셀 파일(.xlsx, .xls)을 클릭하여 불러오기</strong>
+        <input type="file" id="fileInput" accept=".xlsx, .xls" style="display:none">
+    </div>
+
+    <div id="setupArea" style="display:none;">
+        <div id="sheetsContainer"></div>
+        <button class="btn-save" id="downloadBtn">JSON 파일로 저장하기</button>
+        <div id="status" class="status-bar"></div>
+    </div>
+</div>
+
+<script>
+    let workbook = null;
+    let originalFileName = "도감데이터";
+
+    // 맵핑할 데이터 필드 정의 (라벨명, 코드키, 자동매칭 힌트)
+    const fields = [
+        { key: 'name', label: '이름(필수)*', hints: ['이름', '명칭', '물고기', '작물', '곤충', '새'] },
+        { key: 'level', label: '레벨*', hints: ['레벨', '난이도', 'Lv', 'level'] },
+        { key: 'location', label: '장소', hints: ['장소', '위치', '획득처', '어장'] },
+        { key: 'weather', label: '날씨', hints: ['날씨', '기상', 'weather'] },
+        { key: 'time', label: '시간', hints: ['시간', '출현시간', 'time'] },
+        { key: 'price', label: '가격', hints: ['가격', '금액', '판매가'] },
+        { key: 'size', label: '크기', hints: ['크기', '사이즈', 'size'] },
+        { key: 'sub_type', label: '구분(종류)', hints: ['구분', '종류', '타입', '분류'] },
+        { key: 'memo', label: '메모', hints: ['메모', '비고', '특이사항'] }
+    ];
+
+    const categories = ["미사용", "낚시", "요리", "원예", "새 관찰", "곤충 채집"];
+
+    // 파일 로드 이벤트
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        originalFileName = file.name.split('.').slice(0, -1).join('.'); // 확장자 제거한 이름 저장
+        
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            workbook = XLSX.read(evt.target.result, { type: 'binary' });
+            renderSheets();
+        };
+        reader.readAsBinaryString(file);
+    });
+
+    // 시트별 설정 화면 렌더링
+    function renderSheets() {
+        const container = document.getElementById('sheetsContainer');
+        container.innerHTML = "";
+        
+        workbook.SheetNames.forEach((sheetName, idx) => {
+            const sheet = workbook.Sheets[sheetName];
+            const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+            if (data.length === 0) return;
+            
+            const headers = data[0]; // 첫 번째 줄을 헤더로 인식
+
+            const card = document.createElement('div');
+            card.className = 'sheet-card';
+            card.dataset.sheetName = sheetName;
+
+            card.innerHTML = `
+                <div class="sheet-header">
+                    <strong>📄 시트명: ${sheetName}</strong>
+                    <div>
+                        <span style="font-size:0.9em;">카테고리 지정: </span>
+                        <select class="cat-select">
+                            ${categories.map(c => `<option value="${c}" ${sheetName.includes(c)?'selected':''}>${c}</option>`).join('')}
+                        </select>
+                    </div>
+                </div>
+                <div class="mapping-grid">
+                    ${fields.map(f => `
+                        <div class="field-box">
+                            <span class="field-label">${f.label}</span>
+                            <select class="header-match" data-field-key="${f.key}">
+                                <option value="">-- 제외 --</option>
+                                ${headers.map(h => {
+                                    const isMatch = f.hints.some(hint => String(h).includes(hint));
+                                    return `<option value="${h}" ${isMatch ? 'selected' : ''}>${h}</option>`;
+                                }).join('')}
+                            </select>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        document.getElementById('setupArea').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('setupArea').offsetTop, behavior: 'smooth' });
+    }
+
+    // JSON 변환 및 저장
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        const result = { 
+            "낚시":[], "요리":[], "원예":[], "새 관찰":[], "곤충 채집":[], 
+            "my_levels": {"낚시":1,"요리":1,"원예":1,"새 관찰":1,"곤충 채집":1} 
+        };
+
+        const sheetCards = document.querySelectorAll('.sheet-card');
+        let totalCount = 0;
+
+        sheetCards.forEach(card => {
+            const cat = card.querySelector('.cat-select').value;
+            if (cat === "미사용") return;
+
+            const sheetName = card.dataset.sheetName;
+            const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+            
+            // 현재 시트의 매칭 맵 생성
+            const mapping = {};
+            card.querySelectorAll('.header-match').forEach(sel => {
+                if (sel.value) mapping[sel.dataset.fieldKey] = sel.value;
+            });
+
+            rows.forEach(row => {
+                const getVal = (k) => row[mapping[k]] ? String(row[mapping[k]]) : "";
+                
+                // 데이터 정제 로직 (숫자만 추출 등)
+                const item = {
+                    "name": getVal('name'),
+                    "level": getVal('level').replace(/[^0-9]/g, '') || "1",
+                    "location": getVal('location'),
+                    "weather": getVal('weather') || "무관",
+                    "time": getVal('time') || "종일",
+                    "price": getVal('price').replace(/[^0-9]/g, ''),
+                    "size": getVal('size'),
+                    "stars": [false, false, false, false, false],
+                    "img_path": "",
+                    "memo": getVal('memo'),
+                    "sub_type": getVal('sub_type')
+                };
+
+                if (item.name) {
+                    result[cat].push(item);
+                    totalCount++;
+                }
+            });
+        });
+
+        if (totalCount === 0) {
+            alert("변환할 데이터가 없습니다. 카테고리와 필수 항목을 확인해주세요.");
+            return;
+        }
+
+        // 파일 이름 입력 및 위치 선택창 유도
+        let saveName = prompt("저장할 파일 이름을 입력하세요:", originalFileName + ".json");
+        if (saveName === null) return; // 취소 시 중단
+        if (!saveName.toLowerCase().endsWith('.json')) saveName += ".json";
+
+        const blob = new Blob([JSON.stringify(result, null, 4)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = saveName;
+        a.click();
+
+        document.getElementById('status').innerHTML = `✅ <span style="color:blue">${saveName}</span>으로 ${totalCount}개의 데이터를 저장했습니다.`;
+    });
+</script>
+
+</body>
+</html>
